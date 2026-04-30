@@ -1,1 +1,110 @@
+import java.util.*;
 
+// Product класы
+class Product {
+    String name;
+    int quantity;
+    double price;
+
+    public Product(String name, int quantity, double price) {
+        this.name = name;
+        this.quantity = quantity;
+        this.price = price;
+    }
+
+    public String toString() {
+        return name + " | саны: " + quantity + " | бағасы: " + price;
+    }
+}
+
+// Main класс
+public class WarehouseSystem {
+
+    static HashMap<String, Product> warehouse = new HashMap<>();
+    static Scanner sc = new Scanner(System.in);
+
+    // Қосу
+    public static void addProduct() {
+        System.out.print("Атауы: ");
+        String name = sc.next();
+        System.out.print("Саны: ");
+        int quantity = sc.nextInt();
+        System.out.print("Бағасы: ");
+        double price = sc.nextDouble();
+
+        warehouse.put(name, new Product(name, quantity, price));
+        System.out.println("Қосылды!");
+    }
+
+    // Көру
+    public static void viewProducts() {
+        System.out.println("\nТауарлар:");
+        for (Product p : warehouse.values()) {
+            System.out.println(p);
+        }
+    }
+
+    // Жаңарту
+    public static void updateProduct() {
+        System.out.print("Өзгертілетін тауар: ");
+        String name = sc.next();
+
+        if (warehouse.containsKey(name)) {
+            System.out.print("Жаңа саны: ");
+            int quantity = sc.nextInt();
+            System.out.print("Жаңа бағасы: ");
+            double price = sc.nextDouble();
+
+            warehouse.put(name, new Product(name, quantity, price));
+            System.out.println("Жаңартылды!");
+        } else {
+            System.out.println("Тауар табылмады!");
+        }
+    }
+
+    // Өшіру
+    public static void deleteProduct() {
+        System.out.print("Өшірілетін тауар: ");
+        String name = sc.next();
+
+        warehouse.remove(name);
+        System.out.println("Өшірілді!");
+    }
+
+    // Іздеу
+    public static void searchProduct() {
+        System.out.print("Іздеу: ");
+        String name = sc.next();
+
+        if (warehouse.containsKey(name)) {
+            System.out.println(warehouse.get(name));
+        } else {
+            System.out.println("Табылмады!");
+        }
+    }
+
+    public static void main(String[] args) {
+
+        while (true) {
+            System.out.println("\n1. Қосу");
+            System.out.println("2. Көру");
+            System.out.println("3. Жаңарту");
+            System.out.println("4. Өшіру");
+            System.out.println("5. Іздеу");
+            System.out.println("6. Шығу");
+            System.out.print("Таңдау: ");
+
+            int choice = sc.nextInt();
+
+            switch (choice) {
+                case 1: addProduct(); break;
+                case 2: viewProducts(); break;
+                case 3: updateProduct(); break;
+                case 4: deleteProduct(); break;
+                case 5: searchProduct(); break;
+                case 6: return;
+                default: System.out.println("Қате таңдау!");
+            }
+        }
+    }
+}
